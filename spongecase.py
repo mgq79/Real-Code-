@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def spongecase(s):
     res = ""
     for i in range (len(s)):
@@ -9,3 +11,8 @@ def spongecase(s):
         else:
             res += s[i]
     return res
+
+import sys
+if(len(sys.argv) > 1):
+    msg = " ".join(sys.argv[1:])
+    print(spongecase(msg))

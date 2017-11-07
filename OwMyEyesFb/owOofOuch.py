@@ -8,7 +8,6 @@ if(len(sys.argv) < 2):
 
 msg = sys.argv[1:]
 msg = " ".join(msg)
-print(msg)
 
 result = ""
 for i in range(len(msg)):

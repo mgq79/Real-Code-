@@ -1,23 +1,16 @@
-#!/usr/bin/env python
-
-import sys, string
-
-if(len(sys.argv) < 2):
-    print("You need an argument")
-    exit()
-
-msg = sys.argv[1:]
-msg = " ".join(msg)
-#print(msg)
-
-result = ""
-for i in range(len(msg)):
-    if msg[i].isalpha():
-        if (i % 2 == 0):
-            result += msg[i].lower()
+def spongecase(s):
+    res = ""
+    for i in range (len(s)):
+        if s[i].isalpha():
+            if (i%2 == 0):
+                res += s[i].lower()
+            else:
+                res += s[i].upper()
         else:
-            result += msg[i].upper()
-    else:
-        result += msg[i]
+            res += s[i]
+    return res
 
-print(result)
+import sys
+if(len(sys.argv) > 1):
+    msg = " ".join(sys.argv[1:])
+    print(spongecase(msg))

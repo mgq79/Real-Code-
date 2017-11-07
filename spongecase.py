@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 def spongecase(s):
     res = ""
     for i in range (len(s)):

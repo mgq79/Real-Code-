@@ -10,6 +10,6 @@ char upCase(char c)
 char downCase(char c)
 {
     if(c < 65) return c;
-    if(c < 91) return (c-32);
+    if(c < 91) return (c+32);
     return c;
 }

@@ -1,5 +1,4 @@
-#include <stdmeme.h>
-#include <stdarg.h>
+#include "stdmeme.h"
 
 
 void memef(char *pat, ...)

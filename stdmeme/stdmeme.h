@@ -20,3 +20,4 @@ char *l33tCase(char *str);      // h4ck3r 5p34k l0l
  */
 char upCase(char c);
 char downCase(char c);
+char intCase(char c);

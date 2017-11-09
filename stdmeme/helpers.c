@@ -38,9 +38,9 @@ char intCase(char c)
             return '7';
         case 'T':
             return '7';
-        case 'l':
+        case 'i':
             return '1';
-        case 'L':
+        case 'I':
             return '1';
         default:
             return c;

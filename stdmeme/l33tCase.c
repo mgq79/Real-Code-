@@ -7,8 +7,7 @@ char *l33tCase(char *str)
     char *result = calloc(sizeof(char), len);
     for(i = 0; i < len; i++)
     {
-        result[i] = intCase(i);
-        printf("%c\n",intCase(i));
+        result[i] = intCase(str[i]);
     }
     return result;
 }

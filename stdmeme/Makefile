@@ -4,3 +4,6 @@ test: stdmeme.h spongeCase.c aestheticCase.c owOofCase.c aggroCase.c l33tCase.c 
 
 lib:
 	echo "Implement later"
+
+clean:
+	rm test

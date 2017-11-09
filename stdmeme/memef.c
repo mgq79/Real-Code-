@@ -20,19 +20,29 @@ void memef(char *pat, ...)
             switch(pat[i])
             {
                 case 's':
-                    printf("%s", spongeCase(va_arg(args, char*)));
+                    s = spongeCase(va_arg(args, char*));
+                    printf("%s", s);
+                    free(s);
                     break;
                 case 'a':
-                    printf("%s", aestheticCase(va_arg(args, char*)));
+                    s = aestheticCase(va_arg(args, char*));
+                    printf("%s", s);
+                    free(s);
                     break;
                 case 'o':
-                    printf("%s", owOofCase(va_arg(args, char*)));
+                    s = owOofCase(va_arg(args, char*));
+                    printf("%s", s);
+                    free(s);
                     break;
                 case 'g':
-                    printf("%s", aggroCase(va_arg(args, char*)));
+                    s = aggroCase(va_arg(args, char*));
+                    printf("%s", s);
+                    free(s);
                     break;
                 case 'l':
-                    printf("%s", l33tCase(va_arg(args, char*)));
+                    s = l33tCase(va_arg(args, char*));
+                    printf("%s", s);
+                    free(s);
                     break;
                 default:
                     printf("<Unrecognized Pattern: %c>", pat[i]);

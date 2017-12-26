@@ -1,0 +1,16 @@
+#
+#
+#  Steve Reich - inspired Phase generated music
+#
+#
+
+
+### Compiling Tests
+#
+#<NOTE> All java files should be compiled to Java 9 SE
+#
+
+make tests
+
+Will compile every .java file in src/test/java, placing the resulting
+class files in src/test. To be used for one-off experimentation

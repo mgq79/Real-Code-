@@ -18,6 +18,8 @@ class Card(object):
         this.shape = shape_choices[shape]
         this.count = count_choices[count]
         this.fill  = fill_choices[fill]
+        this.boundingBox = None
+        this.faceUp = False
         this.animFrame = 0
 
     @staticmethod
@@ -52,6 +54,24 @@ class Card(object):
 
         return True
 
+    def setBoundingBox(this, x0, y0, x1, y1):
+        this.boundingBox = (x0, y0, x1, y1)
+        return this
+
+    def isPointOnCard(this, x, y):
+        if(this.boundingBox == None):
+            print("bounding box not set")
+            exit(1)
+        if(this.boundingBox[0] <= x and x < this.boundingBox[2] \
+       and this.boundingBox[1] <= y and y < this.boundingBox[3]):
+            return True
+        else:
+            return False
+
+    def flipUp(this):
+        this.faceUp = True
+        return this
+
     def drawDiamond(this, canvas, x0, y0, x1, y1):
         point1 = ((x0+x1)/2, y0) # Top
         point2 = (x1, (y0+y1)/2) # Right
@@ -63,10 +83,10 @@ class Card(object):
                     fill=this.color)
         elif(this.fill == 'empty'):
             canvas.create_polygon(point1, point2, point3, point4,
-                    fill=this.color)
+                    fill=this.color) #TODO implement empty
         elif(this.fill == 'lined'):
             canvas.create_polygon(point1, point2, point3, point4,
-                    fill=this.color)
+                    fill=this.color, stipple='gray25') #TODO use stipple to figure out this
 
     def drawOblong(this, canvas, x0, y0, x1, y1):
         if(this.fill == 'solid'):
@@ -102,7 +122,11 @@ class Card(object):
             canvas.create_polygon(p1, p2, p3, p4, p5, p6, p7, p8,
                     fill=this.color)
 
-    def drawShape(this, canvas, x0, y0, x1, y1):
+    def drawShape(this, canvas, boundingBox):
+        x0 = boundingBox[0]
+        y0 = boundingBox[1]
+        x1 = boundingBox[2]
+        y1 = boundingBox[3]
         if(this.shape == "diamond"):
             this.drawDiamond(canvas, x0, y0, x1, y1)
         elif(this.shape == "oblong"):
@@ -113,15 +137,57 @@ class Card(object):
             print("invalid shape: " + this.shape)
             exit(1)
 
-    def draw(this, canvas, x0, y0, x1, y1):
+    def drawBack(this, canvas):
+        if(this.boundingBox == None):
+            print("bounding box not set")
+            exit(1)
+        x0 = this.boundingBox[0]
+        y0 = this.boundingBox[1]
+        x1 = this.boundingBox[2]
+        y1 = this.boundingBox[3]
+
+        canvas.create_rectangle(x0, y0, x1, y1)
+
+    def draw(this, canvas):
+        if(this.boundingBox == None):
+            print("bounding box not set")
+            exit(1)
+
+        if(not this.faceUp):
+            this.drawBack(canvas)
+            return
+
+        x0 = this.boundingBox[0]
+        y0 = this.boundingBox[1]
+        x1 = this.boundingBox[2]
+        y1 = this.boundingBox[3]
         width  = x1-x0
         height = y1-y0
+
+        shapeHeight = height/5 - 5
+
         bLeft = x0 + width/4
         bRight = x0 + width*3/4
-        bTop = y0 + height/3
-        bBottom = y0 + height*2/3
-        bPadding = (bBottom-bTop)/6 # This 6 might have to adjust
+
+        bTop1 = y0 + height * 1/5
+        bTop2 = y0 + height * 1/4
+        bTop3 = y0 + height * 2/5
+        bTop4 = y0 + height * 2/4
+        bTop5 = y0 + height * 3/5
+
+        bBox1 = (bLeft, bTop1, bRight, bTop1 + shapeHeight)
+        bBox2 = (bLeft, bTop2, bRight, bTop2 + shapeHeight)
+        bBox3 = (bLeft, bTop3, bRight, bTop3 + shapeHeight)
+        bBox4 = (bLeft, bTop4, bRight, bTop4 + shapeHeight)
+        bBox5 = (bLeft, bTop5, bRight, bTop5 + shapeHeight)
 
         canvas.create_rectangle(x0, y0, x1, y1)
         if(this.count == 1):
-            this.drawShape(canvas, bLeft, bTop, bRight, bBottom)
+            this.drawShape(canvas, bBox3)
+        if(this.count == 2):
+            this.drawShape(canvas, bBox2)
+            this.drawShape(canvas, bBox4)
+        if(this.count == 3):
+            this.drawShape(canvas, bBox1)
+            this.drawShape(canvas, bBox3)
+            this.drawShape(canvas, bBox5)
